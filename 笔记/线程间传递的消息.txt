@@ -1,0 +1,11 @@
+UI线程->渲染线程
+1）关于SurfaceView-Surface（SurfaceCreated，SurfaceChanged...）
+2）垂直同步信号到达
+3)中断渲染
+
+渲染线程->UI线程
+1）渲染线程的Handler创建完成（这样UI线程才能对其发送消息）
+
+渲染线程->I线程
+1）渲染完成
+
