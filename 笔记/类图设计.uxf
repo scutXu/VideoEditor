@@ -95,16 +95,15 @@ bg=red</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>504</x>
+      <x>497</x>
       <y>287</y>
       <w>70</w>
-      <h>56</h>
+      <h>49</h>
     </coordinates>
     <panel_attributes>GLCore
 --
-EGLDevice
 EGLContext
-EGLSurface</panel_attributes>
+EGLDisplay</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -112,11 +111,11 @@ EGLSurface</panel_attributes>
     <coordinates>
       <x>427</x>
       <y>294</y>
-      <w>91</w>
+      <w>84</w>
       <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -158,24 +157,25 @@ bg=blue</panel_attributes>
     <coordinates>
       <x>203</x>
       <y>308</y>
-      <w>112</w>
+      <w>98</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-createOutputSurface</panel_attributes>
+setOutputSurface
+configure</panel_attributes>
     <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>532</x>
+      <x>525</x>
       <y>224</y>
-      <w>77</w>
+      <w>84</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 makeCurrent</panel_attributes>
-    <additional_attributes>20.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>30.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -191,8 +191,8 @@ makeCurrent</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>497</x>
-      <y>413</y>
+      <x>504</x>
+      <y>462</y>
       <w>112</w>
       <h>21</h>
     </coordinates>
@@ -203,14 +203,14 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>532</x>
-      <y>336</y>
+      <x>518</x>
+      <y>329</y>
       <w>77</w>
-      <h>91</h>
+      <h>147</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 makeCurrent</panel_attributes>
-    <additional_attributes>20.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;190.0;20.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -229,17 +229,17 @@ getSurface</panel_attributes>
     <coordinates>
       <x>392</x>
       <y>434</y>
-      <w>147</w>
-      <h>77</h>
+      <w>77</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>190.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>90.0;170.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>469</x>
-      <y>497</y>
+      <x>399</x>
+      <y>553</y>
       <w>98</w>
       <h>21</h>
     </coordinates>
@@ -249,30 +249,30 @@ getSurface</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>539</x>
-      <y>427</y>
-      <w>28</w>
-      <h>84</h>
+      <x>469</x>
+      <y>476</y>
+      <w>105</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>20.0;10.0;10.0;100.0</additional_attributes>
+    <additional_attributes>130.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>392</x>
       <y>308</y>
-      <w>119</w>
-      <h>119</h>
+      <w>126</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>150.0;150.0;10.0;10.0</additional_attributes>
+    <additional_attributes>160.0;220.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>175</x>
-      <y>441</y>
+      <y>462</y>
       <w>70</w>
       <h>21</h>
     </coordinates>
@@ -284,11 +284,12 @@ getSurface</panel_attributes>
     <coordinates>
       <x>203</x>
       <y>385</y>
-      <w>21</w>
-      <h>70</h>
+      <w>126</w>
+      <h>91</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+    <panel_attributes>lt=&lt;.
+Surface(SurfaceTexture)</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -327,8 +328,8 @@ bg=red</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>658</x>
-      <y>350</y>
+      <x>686</x>
+      <y>357</y>
       <w>105</w>
       <h>21</h>
     </coordinates>
@@ -339,26 +340,26 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>595</x>
-      <y>364</y>
-      <w>91</w>
-      <h>70</h>
+      <x>609</x>
+      <y>371</y>
+      <w>126</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-createInputSurface
+setInputSurface
 </panel_attributes>
-    <additional_attributes>20.0;80.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;140.0;120.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
+      <x>728</x>
       <y>273</y>
-      <w>91</w>
-      <h>91</h>
+      <w>63</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;110.0;110.0;10.0</additional_attributes>
+    <additional_attributes>10.0;120.0;70.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -370,5 +371,28 @@ createInputSurface
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>70.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>329</y>
+      <w>154</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+createOffscreenSurface</panel_attributes>
+    <additional_attributes>100.0;190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>238</x>
+      <y>315</y>
+      <w>175</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;220.0;230.0;10.0</additional_attributes>
   </element>
 </diagram>
