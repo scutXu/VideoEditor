@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
 public class RenderHandler extends Handler {
     private static final int MSG_SURFACE_CREATED = 0;
     private static final int MSG_SURFACE_CHANGED = 1;
-    private static final int MSG_DO_FRAME = 2;
+    private static final int MSG_START_RENDER = 2;
 
     private WeakReference<RenderThread> mWeakRenderThread;
 
@@ -27,8 +27,8 @@ public class RenderHandler extends Handler {
     public void sendSurfaceChanged(int width,int height) {
         sendMessage(obtainMessage(RenderHandler.MSG_SURFACE_CHANGED,width,height));
     }
-    public void sendDoFrame() {
-        sendMessage(obtainMessage(RenderHandler.MSG_DO_FRAME));
+    public void sendStartRender() {
+        sendMessage(obtainMessage(RenderHandler.MSG_START_RENDER));
     }
 
     @Override
@@ -45,8 +45,8 @@ public class RenderHandler extends Handler {
             case MSG_SURFACE_CHANGED:
                 renderThread.surfaceChanged(msg.arg1,msg.arg2);
                 break;
-            case MSG_DO_FRAME:
-                renderThread.draw();
+            case MSG_START_RENDER:
+                renderThread.prepareNextFrame();
                 break;
         }
     }

@@ -36,11 +36,26 @@ public class RenderThread extends Thread {
     private FloatBuffer mVertices;
     private int mTexture;
     private int mShaderProgram;
+    private int mCachedBufferIndex;
+    private boolean isReadFinished = false;
+    private long lastPTS = -1;
+    private long lastRenderStartTime = -1;
+    private Runnable mDrawRunnable;
+
+    private long timeRecord;
+    private boolean firstRender = true;
 
     public RenderThread(UIHandler uiHandler,MediaCodec decoder,SurfaceHolder holder) {
         mUIHandler = uiHandler;
         mDecoder = decoder;
         mScreenSurfaceHolder = holder;
+        mDrawRunnable = new Runnable() {
+            @Override
+            public void run() {
+                lastRenderStartTime = System.nanoTime();
+                mDecoder.releaseOutputBuffer(mCachedBufferIndex, true);
+            }
+        };
     }
 
     @Override
@@ -82,7 +97,7 @@ public class RenderThread extends Thread {
 
         createTexture();
         int textureUniformLocation = GLES20.glGetUniformLocation(mShaderProgram,"frameTexture");
-        GLES20.glUniform1i(textureUniformLocation,0);
+        GLES20.glUniform1i(textureUniformLocation, 0);
     }
 
     public void surfaceChanged(int width,int height) {
@@ -124,8 +139,22 @@ public class RenderThread extends Thread {
                 GLES20.glEnableVertexAttribArray(mPositionAttribLocation);
                 GLES20.glVertexAttribPointer(mPositionAttribLocation, 2, GLES20.GL_FLOAT, false, 0, mVertices);
                 GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 4);
-                Log.i("mytag","draw frame");
+                //Log.i("mytag","draw frame");
                 mEglCore.swapBuffers(mEglScreenSurface);
+
+                if(firstRender) {
+                    firstRender = false;
+                    timeRecord = System.nanoTime();
+                }
+
+                if(isReadFinished) {
+                    //do some shut down job
+                    //Log.i("mytag","render finished");
+                    Log.i("mytag","total time" + Long.toString((System.nanoTime() - timeRecord)/1000000L));
+                }
+                else {
+                    prepareNextFrame();
+                }
             }
         });
     }
@@ -156,24 +185,54 @@ public class RenderThread extends Thread {
 
     }
 
-    public void draw() {
-        ByteBuffer [] outputBuffers = mDecoder.getOutputBuffers();
+    public void prepareNextFrame() {
         MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
         while(true) {
             int bufferIndex = mDecoder.dequeueOutputBuffer(info, -1L);
             if(bufferIndex >= 0) {
+                //boolean doRender = ((info.size != 0) && ((info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0));
                 boolean doRender = (info.size != 0);
-                mDecoder.releaseOutputBuffer(bufferIndex,doRender);
+                boolean eos = ((info.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0);
                 if(doRender) {
+                    mCachedBufferIndex = bufferIndex;
+                    if(eos) {
+                        //Log.i("mytag","eos with frame");
+                        isReadFinished = true;
+                    }
+                    else {
+                        //add time event
+                        if(lastPTS < 0) {
+                            //Log.i("mytag","first frame");
+                            mRenderHandler.post(mDrawRunnable);
+                        }
+                        else {
+                            long delay = ((info.presentationTimeUs - lastPTS) - ((System.nanoTime() - lastRenderStartTime)/1000L))/1000L;
+                            //Log.i("mytag",Long.toString(delay));
+                            if(delay <= 0) {
+                                mRenderHandler.post(mDrawRunnable);
+                            }
+                            else {
+                                mRenderHandler.postDelayed(mDrawRunnable, delay);
+                                //mRenderHandler.post(mDrawRunnable);
+                            }
+                        }
+                        lastPTS = info.presentationTimeUs;
+                    }
                     break;
+                }
+                else {
+                    mDecoder.releaseOutputBuffer(bufferIndex,false);
+                    if(eos) {
+                        //end thread
+                        Log.i("mytag","total time:" + Long.toString(System.nanoTime() - timeRecord));
+                        Log.i("mytag","eos without frame");
+                        break;
+                    }
                 }
             }
             else {
-                if(bufferIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
-                    outputBuffers = mDecoder.getOutputBuffers();
-                }
-                else {
-                    Log.i("mytag","error buffer index:" + Integer.toString(bufferIndex));
+                if(bufferIndex != MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                    //Log.i("mytag","error buffer index:" + Integer.toString(bufferIndex));
                 }
             }
         }

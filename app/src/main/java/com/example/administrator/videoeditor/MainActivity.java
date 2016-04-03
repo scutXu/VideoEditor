@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             @Override
             public void onClick(View v) {
                 Log.i("mytag","click");
-                mRenderThread.getHandler().sendDoFrame();
+                mRenderThread.getHandler().sendStartRender();
             }
         });
         sv.getHolder().addCallback(this);
